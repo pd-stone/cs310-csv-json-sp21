@@ -67,7 +67,34 @@ public class Converter {
             List<String[]> full = reader.readAll();
             Iterator<String[]> iterator = full.iterator();
             
-            // INSERT YOUR CODE HERE
+            JSONObject jsonObject = new JSONObject();
+            JSONArray colHead = new JSONArray();
+            JSONArray rowHead = new JSONArray();
+            JSONArray dataValues = new JSONArray();
+            
+            String[] headers = iterator.next();
+            
+            for (int i = 0; i < headers.length; i++){
+                
+                colHead.add(headers[i]);
+        }
+            while (iterator.hasNext()){
+                
+                String[] row = iterator.next();
+                JSONArray data = new JSONArray();
+                
+                for (int i = 0; i < (row.length) - 1 ; i++){
+                    
+                    data.add(Integer.parseInt(row[i+1]));
+                }
+                dataValues.add(data);
+            }
+            
+            jsonObject.put("colHead", colHead);
+            jsonObject.put("rowHead", rowHead);
+            jsonObject.put("dataValues", dataValues);
+            
+            results = JSONValue.toJSONString(jsonObject);
             
         }        
         catch(Exception e) { return e.toString(); }
