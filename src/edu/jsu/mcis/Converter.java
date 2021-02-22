@@ -117,9 +117,9 @@ public class Converter {
             JSONParser parser = new JSONParser();
             JSONObject jsonObject = (JSONObject)parser.parse(jsonString);
             
-            JSONArray colHead = (JSONArray) jsonObject.get("colheaders");
+            JSONArray colHead = (JSONArray) jsonObject.get("colHeaders");
             JSONArray rowHead = (JSONArray) jsonObject.get("rowHeaders");
-            JSONArray data = (JSONArray) jsonObject.get("data");
+            JSONArray JSONData = (JSONArray) jsonObject.get("data");
             
             String[] headers = new String[colHead.size()];
             
@@ -129,15 +129,16 @@ public class Converter {
             }
             csvWriter.writeNext(headers);
             
-            for(int i = 0; i < data.size(); i++){
+            for(int i = 0; i < rowHead.size(); i++){
                 
-                JSONArray line = (JSONArray) data.get(i);
+                JSONArray line = (JSONArray)JSONData.get(i);
                 String[] thisLine = new String[line.size()+1];
-                thisLine[0] = (String) rowHead.get(i);
+                
+                thisLine[0] = (String)rowHead.get(i);
                 
                 for (int j = 0; j < line.size(); j++){
                     
-                    thisLine[j+1] = Long.toString((long) line.get(j));
+                    thisLine[j+1] = Long.toString((long)line.get(j));
                 }
                 
                 csvWriter.writeNext(thisLine);
